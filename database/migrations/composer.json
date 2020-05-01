@@ -1,0 +1,15 @@
+{
+  "name": "vendor_name/migrations",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "john",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+      "doctrine/dbal": "^2.10"
+  }
+}

@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('images', 'WelcomeController', ['only' => ['store', 'destroy']]);
+
