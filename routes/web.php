@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'WelcomeController@index');
 
-Route::resource('images', 'WelcomeController', ['only' => ['store', 'destroy']]);
-
+Route::resource('images', 'ImageController');

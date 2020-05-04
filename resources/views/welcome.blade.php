@@ -11,6 +11,10 @@
             body, .card{
                 background: #ededed;
             }
+            .thumbnail a img {
+                height:156.73px;
+                width:100%;
+            }
         </style>
     </head>
     <body>
@@ -34,42 +38,41 @@
                     </div>
                 @endif
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-8"  style="margin-left: auto;margin-right: auto;">
                 @if (count($images ?? []) > 0)
-                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            @foreach ($images as $image)
-                                <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                                    <img class="d-block w-100" src="{{ $image['src'] }}" alt="First slide">
-                                    <div class="carousel-caption">
-                                        <form action="{{ url('images/' . $image['name']) }}"  enctype="multipart/form-data" method="POST">
-                                            {{ csrf_field() }}
-                                            {{ method_field('DELETE') }}
-                                            <button type="submit" class="btn btn-default">Remove</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
+                    @php
+                        $count = 0;
+                    @endphp
+                    <h2>Click image for thumbnails</h2>
+                    @foreach ($images as $image)
+                        @if($count % 3 == 0)
+                            <div class="row">
+                                @endif
+                                <div class="col-md-4">
+                                    <div class="thumbnail">
+                                        <a href="{{route('images.show', $image->id)}}">
+                                            <div class="caption">
+                                                <p>{{ $image->name }}</p>
+                                            </div>
+                                            <img src="http://victory.s3.amazonaws.com/{{$image->id}}" alt="{{ $image->name }}">
+                                        </a>
+                                    </div> <!-- .thumbnail -->
+                                </div> <!-- .col-md-4 -->
+                                @if($count++ % 3 == 2)
+                            </div> <!-- .row -->
+                        @endif
+                    @endforeach
                 @else
                     <p>Nothing found</p>
                 @endif
             </div>
-            <div class="col-sm-4">
+
+            <div class="col-sm-4" style="padding-top: 25px;">
                 <div class="card border-0 text-center">
                     <form action="{{ url('/images') }}" method="POST" enctype="multipart/form-data" class="form-horizontal">
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <input type="file" name="image[]" id="image" multiple>
+                            <input type="file" name="images[]" id="images" multiple>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Upload</button>
