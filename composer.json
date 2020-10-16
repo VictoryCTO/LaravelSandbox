@@ -68,6 +68,10 @@
         "victorycto/sandboxjwc": {
             "type": "path",
             "url": "/home/vagrant/code/packages/victorycto/sandboxjwc"
+        },
+        "joeyfrich/imageresizer": {
+            "type": "path",
+            "url": "packages/joeyfrich/imageresizer"
         }
     }
 }
