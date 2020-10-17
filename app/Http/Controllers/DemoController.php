@@ -16,6 +16,8 @@ class DemoController extends Controller
     
     if (in_array($image_extension, $acceptable_extensions)) {
       if (in_array($mime_type, $acceptable_mime_types)) {
+        $resizer = new \Joeyfrich\ImageResizer\ImageResizer();
+        
         return view('image_uploaded')
           ->with('image_extension', $image_extension);
       }
