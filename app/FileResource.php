@@ -8,13 +8,18 @@ class FileResource extends Model
 {
   protected $primaryKey = "resource_id";
   
+	// Return the file relative path
+	public function getFname() {
+		return $this->resource_id."_".$this->resource_key.".".$this->file_extension;
+	}
+  
   // Fetch a file by ID
   public static function fetchById($resource_id) {
     return FileResource::where('resource_id', $resource_id)
       ->first();
   }
   
-  // Fetch a resource within a dataset based on a hash of its contents
+  // Fetch a file based on the hash of its contents
   public static function fetchResourceByHash($hash_identifier, $resource_type, $file_extension) {
     return FileResource::where('hash_identifier', $hash_identifier)
       ->where('resource_type', $resource_type)
@@ -41,5 +46,24 @@ class FileResource extends Model
     
     if ($resource) return [$resource, false];
     else return [FileResource::createResource($hash_identifier, $resource_type, $file_extension, $filesize_bytes), true];
+  }
+  
+	// Save the contents of a file to local disk
+	public function saveRawFile(&$raw_file) {
+		$fname = $this->getFname();
+		
+		if (!Storage::disk('public')->exists($fname)) {
+			$new_file = Storage::put("public/".$fname, $raw_file);
+			$this->locally_saved = 1;
+			$this->save();
+		}
+	}
+  
+  public static function fetchRecent($qty) {
+    return FileResource::limit($qty)->orderBy('created_at', 'desc')->get();
+  }
+  
+  public static function totalQty() {
+    return count(FileResource::get());
   }
 }

@@ -15,6 +15,7 @@ class FileResources extends Migration
       $table->string('hash_identifier')->nullable();
       $table->string('file_extension')->nullable();
       $table->integer('filesize_bytes')->nullable();
+      $table->boolean('locally_saved')->nullable()->default(0);
       $table->timestamps();
     });
   }

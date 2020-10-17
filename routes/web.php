@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'DemoController@home');
+Route::get('/image', 'DemoController@home');
 
 Route::post('/image', 'DemoController@uploadImage');
+Route::get('/delete/{resource_id}', 'DemoController@deleteImage');
