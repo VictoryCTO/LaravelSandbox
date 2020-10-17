@@ -22,8 +22,10 @@ class DemoController extends Controller
     $any_error = false;
     $error_messages = [];
     $success_count = 0;
+
+    ini_set('max_file_uploads', 1000);
     
-    foreach ($request->allFiles()['demoFiles'] as $up_key => $up_file) {
+    foreach ($request->allFiles()['demoFiles'] as $up_file) {
       $original_image_name_parts = explode(".", $up_file->getClientOriginalName());
       $image_extension = strtolower($original_image_name_parts[count($original_image_name_parts)-1]);
       $mime_type = $up_file->getMimeType();
