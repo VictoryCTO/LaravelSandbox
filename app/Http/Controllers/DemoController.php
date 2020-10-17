@@ -15,7 +15,7 @@ class DemoController extends Controller
   }
   
   public function uploadImage(Request $request) {
-    $acceptable_extensions = ["jpg","png"];
+    $acceptable_extensions = ["jpg", "jpeg","png"];
     $acceptable_mime_types = ["image/jpeg", "image/png"];
     $featured_resource = null;
     

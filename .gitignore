@@ -14,6 +14,5 @@ npm-debug.log
 yarn-error.log
 .idea
 .vagrant
-/composer.lock
 /packages/*
 !/packages/joeyfrich/
