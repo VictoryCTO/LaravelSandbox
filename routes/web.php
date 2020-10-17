@@ -16,3 +16,4 @@ Route::get('/image', 'DemoController@home');
 
 Route::post('/image', 'DemoController@uploadImage');
 Route::get('/delete/{resource_id}', 'DemoController@deleteImage');
+Route::get('/delete_all', 'DemoController@deleteAll');

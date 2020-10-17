@@ -66,4 +66,10 @@ class FileResource extends Model
   public static function totalQty() {
     return count(FileResource::get());
   }
+  
+  public function deleteImage() {
+    FileResource::where('resource_id', $this->resource_id)->delete();
+    
+    unlink(storage_path('app/public/'.$this->getFname()));
+  }
 }
