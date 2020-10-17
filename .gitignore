@@ -16,3 +16,5 @@ yarn-error.log
 .vagrant
 /packages/*
 !/packages/joeyfrich/
+/composer.lock
+/composer.json

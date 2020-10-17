@@ -40,6 +40,13 @@ class DemoController extends Controller
             
             $image_resource->saveRawFile($raw_image);
             
+            $s3_path = $up_file->store('s3');
+            
+            $image_resource->primary_aws_path = $s3_path;
+            $image_resource->primary_aws_url = \Storage::disk('s3')->url($s3_path);
+            $image_resource->saved_in_aws = 1;
+            $image_resource->save();
+            
             $featured_resource = $image_resource;
             
             if ($is_new) $success_count++;
@@ -85,5 +92,15 @@ class DemoController extends Controller
     }
     
     return \Redirect::to('/');
+  }
+  
+  public function cloudImage($resource_key) {
+    $image_resource = FileResource::fetchByKey($resource_key);
+    
+    if ($image_resource) {
+      return \Storage::disk('s3')->response($image_resource->primary_aws_path);
+    }
+    else return view('simple_message')
+      ->with('message', 'There was an error loading that image');
   }
 }

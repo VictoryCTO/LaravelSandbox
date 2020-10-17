@@ -19,6 +19,12 @@ class FileResource extends Model
       ->first();
   }
   
+  // Fetch a file by resource key
+  public static function fetchByKey($resource_key) {
+    return FileResource::where('resource_key', $resource_key)
+      ->first();
+  }
+  
   // Fetch a file based on the hash of its contents
   public static function fetchResourceByHash($hash_identifier, $resource_type, $file_extension) {
     return FileResource::where('hash_identifier', $hash_identifier)
@@ -70,6 +76,6 @@ class FileResource extends Model
   public function deleteImage() {
     FileResource::where('resource_id', $this->resource_id)->delete();
     
-    unlink(storage_path('app/public/'.$this->getFname()));
+    if ($this->locally_saved) unlink(storage_path('app/public/'.$this->getFname()));
   }
 }
