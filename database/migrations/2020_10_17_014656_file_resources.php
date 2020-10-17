@@ -10,11 +10,12 @@ class FileResources extends Migration
   {
     Schema::create('file_resources', function (Blueprint $table) {
       $table->bigIncrements('resource_id');
-			$table->string('resource_type')->nullable();
-			$table->string('resource_key')->nullable();
-			$table->string('hash_identifier')->nullable();
-			$table->string('file_extension')->nullable();
-			$table->timestamps();
+      $table->string('resource_type')->nullable();
+      $table->string('resource_key')->nullable();
+      $table->string('hash_identifier')->nullable();
+      $table->string('file_extension')->nullable();
+      $table->integer('filesize_bytes')->nullable();
+      $table->timestamps();
     });
   }
 
