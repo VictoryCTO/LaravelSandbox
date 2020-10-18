@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Joeyfrich\ImageResizer\ImageResizer;
-use App\FileResource;
+use Joeyfrich\ImageResizer\FileResource;
 use Intervention\Image\ImageManager;
 
 class DemoController extends Controller

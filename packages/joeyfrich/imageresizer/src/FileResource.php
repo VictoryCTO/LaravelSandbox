@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace Joeyfrich\ImageResizer;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
