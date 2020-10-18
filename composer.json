@@ -68,6 +68,10 @@
         "victorycto/sandboxjwc": {
             "type": "path",
             "url": "/home/vagrant/code/packages/victorycto/sandboxjwc"
+        },
+        "victoryct/mpemburn-sandbox": {
+            "type": "path",
+            "url": "/Users/mpemburn/code/LaravelSandbox/packages/victoryct/mpemburn_sandbox"
         }
     }
 }
