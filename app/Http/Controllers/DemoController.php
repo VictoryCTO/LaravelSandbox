@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Joeyfrich\ImageResizer\ImageResizer;
 use App\FileResource;
+use Intervention\Image\ImageManager;
 
 class DemoController extends Controller
 {
@@ -15,7 +16,7 @@ class DemoController extends Controller
   }
   
   public function uploadImage(Request $request) {
-    $acceptable_extensions = ["jpg", "jpeg","png"];
+    $acceptable_extensions = ["jpg", "jpeg", "png"];
     $acceptable_mime_types = ["image/jpeg", "image/png"];
     $featured_resource = null;
     
@@ -40,12 +41,22 @@ class DemoController extends Controller
             
             $image_resource->saveRawFile($raw_image);
             
-            $s3_path = $up_file->store('s3');
+            if (env('SAVE_TO_S3')) {
+              $s3_path = $up_file->store('s3');
+              
+              $image_resource->primary_aws_path = $s3_path;
+              $image_resource->primary_aws_url = \Storage::disk('s3')->url($s3_path);
+              $image_resource->saved_in_aws = 1;
+              $image_resource->save();
+            }
             
-            $image_resource->primary_aws_path = $s3_path;
-            $image_resource->primary_aws_url = \Storage::disk('s3')->url($s3_path);
-            $image_resource->saved_in_aws = 1;
-            $image_resource->save();
+            $im_manager = new ImageManager(array('driver' => 'imagick'));
+            
+            foreach (FileResource::imageSizes() as $size_prefix => $size_info) {
+              $im_thumb = $im_manager->make($up_file);
+              $im_thumb->resize($size_info['max_width'], $size_info['max_height']);
+              $im_thumb->save("storage/".$image_resource->resource_id."_".$image_resource->resource_key."_".$size_prefix.".".$image_resource->file_extension);
+            }
             
             $featured_resource = $image_resource;
             

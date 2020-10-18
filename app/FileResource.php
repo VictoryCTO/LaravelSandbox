@@ -9,9 +9,22 @@ class FileResource extends Model
   protected $primaryKey = "resource_id";
   
 	// Return the file relative path
-	public function getFname() {
-		return $this->resource_id."_".$this->resource_key.".".$this->file_extension;
+	public function getFname($size_prefix="") {
+		return $this->resource_id."_".$this->resource_key.(empty($size_prefix) ? "" : "_".$size_prefix).".".$this->file_extension;
 	}
+  
+  public static function imageSizes() {
+    return [
+      "thumb" => [
+        "max_width" => 300,
+        "max_height" => 200
+      ],
+      "medium" => [
+        "max_width" => 1000,
+        "max_height" => 600
+      ]
+    ];
+  }
   
   // Fetch a file by ID
   public static function fetchById($resource_id) {
@@ -76,6 +89,12 @@ class FileResource extends Model
   public function deleteImage() {
     FileResource::where('resource_id', $this->resource_id)->delete();
     
-    if ($this->locally_saved) unlink(storage_path('app/public/'.$this->getFname()));
+    if ($this->locally_saved) {
+      unlink(storage_path('app/public/'.$this->getFname()));
+      
+      foreach (FileResource::imageSizes() as $size_prefix => $size_info) {
+        unlink(storage_path('app/public/'.$this->getFname($size_prefix)));
+      }
+    }
   }
 }
