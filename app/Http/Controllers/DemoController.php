@@ -105,11 +105,20 @@ class DemoController extends Controller
     return \Redirect::to('/');
   }
   
-  public function cloudImage($resource_key) {
+  public function cloudImage($resource_key, Request $request) {
     $image_resource = FileResource::fetchByKey($resource_key);
+    $size_prefix = $request->all()['size'] ?? null;
+    if (empty(FileResource::imageSizes()[$size_prefix])) $size_prefix = null;
     
     if ($image_resource) {
-      return \Storage::disk('s3')->response($image_resource->primary_aws_path);
+      if ($image_resource->saved_to_aws) {
+        return \Storage::disk('s3')->response($image_resource->primary_aws_path);
+      }
+      else if ($image_resource->locally_saved) {
+        return response()->file("storage/".$image_resource->getFname($size_prefix));
+      }
+      else return view('simple_message')
+        ->with('message', 'That image is not available.');
     }
     else return view('simple_message')
       ->with('message', 'There was an error loading that image');

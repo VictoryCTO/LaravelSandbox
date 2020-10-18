@@ -2,7 +2,7 @@
 
 @section('content')
   @if (!empty($featured_resource))
-    <img src="/storage/{{ $featured_resource->getFname() ?? '' }}" style="max-width: 600px; max-height: 300px;" />
+    <img src="/cloud_image/{{ $featured_resource->resource_key }}" style="max-width: 600px; max-height: 300px;" />
     <br/>
   @endif
   
