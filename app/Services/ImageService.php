@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Intervention\Image\Exception\NotWritableException;
-use Intervention\Image\Image;
+use Intervention\Image\Image as ImageObject;
 use Intervention\Image\ImageManagerStatic as ImageManager;
-use App\Image as ImageModel;
+use App\Image;
 
 class ImageService
 {
@@ -33,6 +33,11 @@ class ImageService
     {
         $this->localPaths = collect();
         $this->cdnUrls = collect();
+    }
+
+    public function getKeyName(): string
+    {
+        return $this->keyName;
     }
 
     public function processUpload(Request $request): ImageService
@@ -62,7 +67,7 @@ class ImageService
         return $this;
     }
 
-    protected function saveLocal(UploadedFile $uploadedFile, Image $imageObject, $newWidth = null): ImageService
+    protected function saveLocal(UploadedFile $uploadedFile, ImageObject $imageObject, $newWidth = null): ImageService
     {
         if ($newWidth) {
             $imageObject = $this->resize($imageObject, $newWidth);
@@ -89,7 +94,7 @@ class ImageService
         return $this;
     }
 
-    protected function resize(Image $imageObject, int $newWidth): Image
+    protected function resize(ImageObject $imageObject, int $newWidth): ImageObject
     {
         $defaultWidth = $imageObject->getWidth();
         $defaultHeight = $imageObject->getHeight();
@@ -133,7 +138,7 @@ class ImageService
         }
 
         $this->cdnUrls->each(function (array $urlArray) {
-            $image = new ImageModel();
+            $image = new Image();
 
             $image->key_name = $this->keyName;
             $image->size = $urlArray['size'];
@@ -143,6 +148,15 @@ class ImageService
         });
 
         return $this;
+    }
+
+    public function getImageData(Request $request): array
+    {
+        $keyName = $request->query('key');
+
+        return Image::query()->where('key_name', '=', $keyName)
+            ->get()
+            ->toArray();
     }
 
     protected function getS3Client(): S3Client
@@ -161,7 +175,7 @@ class ImageService
     {
         $pathInfo = pathinfo($objectUrl);
 
-        return env('CLOUDFRONT_DOMAIN') . '/' . $pathInfo['basename'];
+        return 'https://' . env('CLOUDFRONT_DOMAIN') . '/' . $pathInfo['basename'];
     }
 
     protected function setError(string $error): void
