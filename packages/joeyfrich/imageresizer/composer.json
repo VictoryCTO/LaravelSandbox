@@ -1,0 +1,16 @@
+{
+    "name": "joeyfrich/imageresizer",
+    "description": "A package for storing & resizing images",
+    "authors": [
+        {
+            "name": "Joey Rich",
+            "email": "joeyfrich@gmail.com"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+        "Joeyfrich\\ImageResizer\\": "src/"
+      }
+    },
+    "require": {}
+}

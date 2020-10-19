@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'DemoController@home');
+Route::get('/image', 'DemoController@home');
+
+Route::post('/image', 'DemoController@uploadImage');
+Route::get('/delete/{resource_id}', 'DemoController@deleteImage');
+Route::get('/delete_all', 'DemoController@deleteAll');
+Route::get('/cloud_image/{resource_key}', 'DemoController@cloudImage');
