@@ -3,7 +3,6 @@
 
 namespace App\Services;
 
-use Aws\Result;
 use Aws\S3\S3Client;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -11,6 +10,7 @@ use Illuminate\Support\Collection;
 use Intervention\Image\Exception\NotWritableException;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManagerStatic as ImageManager;
+use App\Image as ImageModel;
 
 class ImageService
 {
@@ -20,6 +20,8 @@ class ImageService
 
     /** @var UploadedFile */
     private $image;
+    /** @var array|string|null */
+    private $keyName;
     /** @var Collection */
     private $localPaths;
     /** @var Collection */
@@ -38,6 +40,8 @@ class ImageService
         if ($request->hasFile('upload_image')) {
             $this->image = $request->file('upload_image');
         }
+
+        $this->keyName = $request->input('key_name');
 
         return $this;
     }
@@ -72,7 +76,11 @@ class ImageService
         try {
             $imageObject->save($destinationPath);
 
-            $this->localPaths->push(['path' => $destinationPath, 'filename' => $filename]);
+            $this->localPaths->push([
+                'path' => $destinationPath,
+                'filename' => $filename,
+                'size' => $size
+            ]);
 
         } catch (NotWritableException $e) {
             $this->setError($e->getMessage());
@@ -108,7 +116,10 @@ class ImageService
                 'SourceFile' => $pathParts['path']
             ]);
             if ($result->hasKey('ObjectURL')) {
-                $this->cdnUrls->push($this->getCdnUrl($result->get('ObjectURL')));
+                $this->cdnUrls->push([
+                    'url' => $this->getCdnUrl($result->get('ObjectURL')),
+                    'size' => $pathParts['size']
+                ]);
             }
         });
 
@@ -117,6 +128,20 @@ class ImageService
 
     public function persistData(): ImageService
     {
+        if ($this->cdnUrls->isEmpty()) {
+            return $this;
+        }
+
+        $this->cdnUrls->each(function (array $urlArray) {
+            $image = new ImageModel();
+
+            $image->key_name = $this->keyName;
+            $image->size = $urlArray['size'];
+            $image->cdn_url = $urlArray['url'];
+
+            $image->save();
+        });
+
         return $this;
     }
 

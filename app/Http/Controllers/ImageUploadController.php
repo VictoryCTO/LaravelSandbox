@@ -24,7 +24,8 @@ class ImageUploadController extends Controller
             ->save([
                 ImageService::IMAGE_SMALL_WIDTH,
                 ImageService::IMAGE_THUMBNAIL_WIDTH
-            ])->uploadToS3Bucket();
+            ])->uploadToS3Bucket()
+            ->persistData();
 
         return 'Did it!';
     }
