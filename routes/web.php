@@ -11,6 +11,16 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/scratch', function () {
+    return view('scratch');
+});
+
+Route::get('/upload', 'ImageUploadController@showForm');
+
+Route::post('/process', 'ImageUploadController@processForm');
