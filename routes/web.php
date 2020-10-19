@@ -24,3 +24,5 @@ Route::get('/scratch', function () {
 Route::get('/upload', 'ImageUploadController@showForm');
 
 Route::post('/process', 'ImageUploadController@processForm');
+
+Route::get('/display', 'ImageDisplayController@displayImages')->name('display');
