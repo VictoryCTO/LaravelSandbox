@@ -12,6 +12,7 @@
         "aws/aws-sdk-php-laravel": "^3.4",
         "cviebrock/laravel-elasticsearch": "^4.1",
         "fideloper/proxy": "^4.0",
+        "intervention/image": "^2.5",
         "jeroen-g/laravel-packager": "^2.3",
         "laravel/framework": "^6.0",
         "laravel/homestead": "^9.3",
@@ -65,13 +66,9 @@
         ]
     },
     "repositories": {
-        "victorycto/sandboxjwc": {
+        "victorycto/mwpsandbox": {
             "type": "path",
-            "url": "/home/vagrant/code/packages/victorycto/sandboxjwc"
-        },
-        "victoryct/mpemburn-sandbox": {
-            "type": "path",
-            "url": "/Users/mpemburn/code/LaravelSandbox/packages/victoryct/mpemburn_sandbox"
+            "url": "/Users/mpemburn/code/LaravelSandbox/packages/victorycto/mwpsandbox"
         }
     }
 }
