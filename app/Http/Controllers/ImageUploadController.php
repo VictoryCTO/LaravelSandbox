@@ -20,7 +20,11 @@ class ImageUploadController extends Controller
             'upload_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $imageService->processUpload($request);
+        $imageService->processUpload($request)
+            ->save([
+                ImageService::IMAGE_SMALL_WIDTH,
+                ImageService::IMAGE_THUMBNAIL_WIDTH
+            ])->uploadToS3Bucket();
 
         return 'Did it!';
     }
