@@ -21,6 +21,9 @@ class S3Test extends TestCase
 
         $awsSecretAccessKey = env('AWS_SECRET_ACCESS_KEY');
         self::assertNotEmpty($awsSecretAccessKey);
+
+        $cloudfrontDomain = env('CLOUDFRONT_DOMAIN');
+        self::assertNotEmpty($cloudfrontDomain);
     }
 
  }

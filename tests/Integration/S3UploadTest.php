@@ -24,6 +24,10 @@ class S3UploadTest extends TestCase
      * @var mixed
      */
     private $awsSecretAccessKey;
+    /**
+     * @var mixed
+     */
+    private $cloudfrontDomain;
 
     public function setUp(): void
     {
@@ -31,6 +35,7 @@ class S3UploadTest extends TestCase
         $this->awsBucket = env('AWS_BUCKET');
         $this->awsAccessKeyId = env('AWS_ACCESS_KEY_ID');
         $this->awsSecretAccessKey = env('AWS_SECRET_ACCESS_KEY');
+        $this->cloudfrontDomain = env('CLOUDFRONT_DOMAIN');
 
         parent::setUp();
     }
