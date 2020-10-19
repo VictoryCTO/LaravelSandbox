@@ -40,6 +40,16 @@ class ImageService
         return $this->keyName;
     }
 
+    public function hasErrors(): bool
+    {
+        return $this->error !== null;
+    }
+
+    public function getError(): string
+    {
+        return $this->error;
+    }
+
     public function processUpload(Request $request): ImageService
     {
         if ($request->hasFile('upload_image')) {

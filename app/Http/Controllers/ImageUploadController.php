@@ -27,6 +27,17 @@ class ImageUploadController extends Controller
             ])->uploadToS3Bucket()
             ->persistData();
 
-        return 'Did it!';
+        if ($imageService->hasErrors()) {
+            return redirect()->route('upload-error', ['error' => base64_encode($imageService->getError())]);
+        }
+
+        $keyName = $imageService->getKeyName();
+
+        return redirect()->route('display', ['key' => $keyName]);
+    }
+
+    public function showUploadError(Request $request): ReturnView
+    {
+        return View::make('upload-error', ['errorMessage' => base64_decode($request->query('error'))]);
     }
 }
