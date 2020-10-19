@@ -16,3 +16,4 @@ yarn-error.log
 .vagrant
 /packages
 .DS_Store
+/public/images
