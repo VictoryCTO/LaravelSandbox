@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\ImageServiceProvider;
+
 return [
 
     /*
@@ -165,6 +167,8 @@ return [
         /*
          * Package Service Providers...
          */
+
+        ImageServiceProvider::class,
 
         /*
          * Application Service Providers...

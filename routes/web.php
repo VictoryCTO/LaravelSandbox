@@ -11,6 +11,16 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/upload', 'ImageUploadController@showForm');
+
+Route::post('/process', 'ImageUploadController@processForm');
+
+Route::get('/display', 'ImageDisplayController@displayImages')->name('display');
+
+Route::get('/upload-error', 'ImageUploadController@showUploadError')->name('upload-error');
