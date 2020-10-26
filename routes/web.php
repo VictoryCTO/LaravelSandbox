@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('resize', 'ResizeController@index');
+
+Route::post('resize/resize_image', 'ResizeController@resize_image');
