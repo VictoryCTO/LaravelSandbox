@@ -1,0 +1,43 @@
+{
+    "name": "victorycto/image-store",
+    "description": "This is an image service, designed to ingest images and prepare them for use on the site",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vitalii Kobyliak",
+            "email": "vitalii.kobyliak@gmail.com"
+        }
+    ],
+    "homepage": "https://github.com/victorycto/image-store",
+    "keywords": ["Laravel", "ImageStore"],
+    "require": {
+        "illuminate/support": "~6|~7|~8",
+        "intervention/image": "^2.5",
+        "league/flysystem-aws-s3-v3": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9.0",
+        "orchestra/testbench": "4.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "victorycto\\ImageStore\\": "src/",
+            "victorycto\\ImageStore\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "victorycto\\ImageStore\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "victorycto\\ImageStore\\ImageStoreServiceProvider"
+            ],
+            "aliases": {
+                "ImageStore": "victorycto\\ImageStore\\Facades\\ImageStore"
+            }
+        }
+    }
+}

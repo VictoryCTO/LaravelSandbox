@@ -17,7 +17,8 @@
         "laravel/homestead": "^9.3",
         "laravel/tinker": "^1.0",
         "sensiolabs/security-checker": "^6.0",
-        "squizlabs/php_codesniffer": "^3.5"
+        "squizlabs/php_codesniffer": "^3.5",
+        "victorycto/image-store": "dev-package"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
@@ -65,9 +66,9 @@
         ]
     },
     "repositories": {
-        "victorycto/sandboxjwc": {
+        "victorycto/image-store": {
             "type": "path",
-            "url": "/home/vagrant/code/packages/victorycto/sandboxjwc"
+            "url": "packages/victorycto/image-store"
         }
     }
 }
