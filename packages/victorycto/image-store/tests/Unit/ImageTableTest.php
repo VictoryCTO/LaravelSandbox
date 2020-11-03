@@ -10,7 +10,7 @@ class ImageTableTest extends TestCase
     use CreatesApplication;
     use RefreshDatabase;
 
-    protected $origin_url;
+    protected $full_url;
     protected $small_url;
     protected $thumbnail_url;
 
@@ -25,7 +25,7 @@ class ImageTableTest extends TestCase
         $faker = Faker\Factory::create();
         $this->image_options = config('imagestore.options');
 
-        $this->origin_url = $faker->imageUrl();
+        $this->full_url = $faker->imageUrl();
         $this->small_url = $faker->imageUrl($this->image_options['small']['size']);
         $this->thumbnail_url = $faker->imageUrl($this->image_options['thumbnail']['size']);
     }
@@ -35,12 +35,12 @@ class ImageTableTest extends TestCase
     public function an_image_store_urls_correctly()
     {
         $image = factory(Image::class)->create([
-            'origin_url' => $this->origin_url,
+            'full_url' => $this->full_url,
             'small_url' => $this->small_url,
             'thumbnail_url' => $this->thumbnail_url
         ]);
 
-        $this->assertEquals($this->origin_url, $image->origin_url);
+        $this->assertEquals($this->full_url, $image->full_url);
         $this->assertEquals($this->small_url, $image->small_url);
         $this->assertEquals($this->thumbnail_url, $image->thumbnail_url);
     }

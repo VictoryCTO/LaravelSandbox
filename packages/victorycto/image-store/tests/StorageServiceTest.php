@@ -10,12 +10,6 @@ use victorycto\ImageStore\Models\Image;
 
 class StorageServiceTest extends TestCase
 {
-    //Store the image to S3 or GCP cloud storage and create a public url - ideally with a CDN frontend
-    //Save the image data to a table of your design in the local mysql database
-    //Make the image available to the frontend
-
-    //Test this package on new laravel application
-
     protected $uploadedFile;
 
     protected function setUp(): void
@@ -31,7 +25,7 @@ class StorageServiceTest extends TestCase
         $service = new StorageService;
         $this->assertInstanceOf(FilesystemAdapter::class, $service->getStorage());
 
-        $storage = Storage::disk('local');
+        $storage = Storage::cloud();
         $service->setStorage($storage);
         $this->assertSame($storage, $service->getStorage());
     }
@@ -45,7 +39,4 @@ class StorageServiceTest extends TestCase
 
         $this->assertTrue($result);
     }
-
-    //service save cloud url to database
-    //service retrieves saved images
 }

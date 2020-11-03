@@ -30,6 +30,9 @@
             "victorycto\\ImageStore\\Tests\\": "tests/"
         }
     },
+    "scripts": {
+        "test": "phpunit"
+    },
     "extra": {
         "laravel": {
             "providers": [

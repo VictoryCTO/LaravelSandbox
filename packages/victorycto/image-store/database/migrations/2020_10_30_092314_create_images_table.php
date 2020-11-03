@@ -16,8 +16,8 @@ class CreateImagesTable extends Migration
         Schema::create(config('imagestore.table_name'), function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('full_url');
-            $table->string('small_url');
-            $table->string('thumbnail_url');
+            $table->string('small_url')->nullable();
+            $table->string('thumbnail_url')->nullable();
             $table->timestamps();
         });
     }
