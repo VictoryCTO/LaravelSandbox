@@ -14,4 +14,6 @@ npm-debug.log
 yarn-error.log
 .idea
 .vagrant
-/packages
+
+# Commenting this out for the sake of showing my custom package in this same repo.
+# /packages
